@@ -42,17 +42,29 @@ const moveThroughCell = (row, column) => {
   if (grid[row][column] === true) {
     return;
   }
-    // Mark this cell as being visited
+
+  // Mark this cell as being visited
   grid[row][column] = true;
+
   // Assemble randomly-ordered list of neighbours
+  const neighbours = [
+    [row - 1, column],
+    [row, column + 1],
+    [row + 1, column],
+    [row, column - 1]
+  ];
 
   // For each neighbour...
 
+
   // See if neighbour is out of bounds
+
 
   // If we have visited that neighbour then continute to next neighbour
 
+
   // Remove a wall from either horizontals or verticals array
+
 
   // Visit that next cell (recursively)
 };
