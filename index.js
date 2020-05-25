@@ -36,3 +36,23 @@ const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(fals
 
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
+
+const moveThroughCell = (row, column) => {
+  // If I have visited the cell at [row, column] then return
+
+  // Mark this cell as being visited
+
+  // Assemble randomly-ordered list of neighbours
+
+  // For each neighbour...
+
+  // See if neighbour is out of bounds
+
+  // If we have visited that neighbour then continute to next neighbour
+
+  // Remove a wall from either horizontals or verticals array
+
+  // Visit that next cell (recursively)
+};
+
+moveThroughCell(startRow, startColumn);
