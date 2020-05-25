@@ -72,19 +72,23 @@ const moveThroughCell = (row, column) => {
   console.log(neighbours);
 
   // For each neighbour...
-
+  for (let neighbour of neighbours) {
+    const [nextRow, nextColumn] = neighbour;
 
   // See if neighbour is out of bounds
-
+    if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
+      continue;
+    }
 
   // If we have visited that neighbour then continute to next neighbour
-
+    if (grid[nextRow][nextColumn] === true) {
+      continue;
+    }
 
   // Remove a wall from either horizontals or verticals array
-
+  }
 
   // Visit that next cell (recursively)
 };
 
 moveThroughCell(startRow, startColumn);
-console.log(grid);
