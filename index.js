@@ -39,9 +39,11 @@ const startColumn = Math.floor(Math.random() * cells);
 
 const moveThroughCell = (row, column) => {
   // If I have visited the cell at [row, column] then return
-
-  // Mark this cell as being visited
-
+  if (grid[row][column] === true) {
+    return;
+  }
+    // Mark this cell as being visited
+  grid[row][column] = true;
   // Assemble randomly-ordered list of neighbours
 
   // For each neighbour...
