@@ -29,6 +29,7 @@ World.add(world, walls);
 
 // Maze generation
 
+//Function to shuffle list of grid cell neighbours
 const shuffle = (arr) => {
   let counter = arr.length;
 
@@ -64,28 +65,33 @@ const moveThroughCell = (row, column) => {
 
   // Assemble randomly-ordered list of neighbours
   const neighbours = shuffle([
-    [row - 1, column],
-    [row, column + 1],
-    [row + 1, column],
-    [row, column - 1]
+    [row - 1, column, 'up'],
+    [row, column + 1, 'right'],
+    [row + 1, column, 'down'],
+    [row, column - 1, 'left']
   ]);
   console.log(neighbours);
 
   // For each neighbour...
   for (let neighbour of neighbours) {
-    const [nextRow, nextColumn] = neighbour;
+    const [nextRow, nextColumn, direction] = neighbour;
 
-  // See if neighbour is out of bounds
+    // See if neighbour is out of bounds
     if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
       continue;
     }
 
-  // If we have visited that neighbour then continute to next neighbour
+    // If we have visited that neighbour then continue to next neighbour
     if (grid[nextRow][nextColumn] === true) {
       continue;
     }
 
-  // Remove a wall from either horizontals or verticals array
+    // Remove a wall from either horizontals or verticals array
+    if (direction === 'left') {
+      verticals[row][column - 1] = true;
+    } else if (direction === 'right') {
+      verticals[row][column] = true;
+    }
   }
 
   // Visit that next cell (recursively)
