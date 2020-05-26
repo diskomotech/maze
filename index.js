@@ -4,6 +4,8 @@ const cells = 3;
 const width = 600;
 const height = 600;
 
+const unitLength = width / cells;
+
 const engine = Engine.create();
 const { world } = engine;
 const render = Render.create({
@@ -95,10 +97,29 @@ const moveThroughCell = (row, column) => {
     } else if (direction === 'down') {
       horizontals[row][column] = true;
     }
+
+    moveThroughCell(nextRow, nextColumn);
   }
 
   // Visit that next cell (recursively)
 };
 
-// moveThroughCell(startRow, startColumn);
-moveThroughCell(1, 1);
+moveThroughCell(startRow, startColumn);
+
+horizontals.forEach((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    if (open === true) {
+      return;
+    }
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength / 2,
+      rowIndex * unitLength + unitLength,
+      unitLength,
+      1,
+      {
+        isStatic: true
+      }
+    );
+    World.add(world, wall);
+  })
+});
