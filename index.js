@@ -108,7 +108,7 @@ moveThroughCell(startRow, startColumn);
 
 horizontals.forEach((row, rowIndex) => {
   row.forEach((open, columnIndex) => {
-    if (open === true) {
+    if (open) {
       return;
     }
     const wall = Bodies.rectangle(
@@ -116,6 +116,24 @@ horizontals.forEach((row, rowIndex) => {
       rowIndex * unitLength + unitLength,
       unitLength,
       1,
+      {
+        isStatic: true
+      }
+    );
+    World.add(world, wall);
+  })
+});
+
+verticals.forEach ((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    if (open) {
+      return;
+    }
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength,
+      rowIndex * unitLength + unitLength / 2,
+      1,
+      unitLength,
       {
         isStatic: true
       }
