@@ -70,7 +70,6 @@ const moveThroughCell = (row, column) => {
     [row + 1, column, 'down'],
     [row, column - 1, 'left']
   ]);
-  console.log(neighbours);
 
   // For each neighbour...
   for (let neighbour of neighbours) {
@@ -91,10 +90,15 @@ const moveThroughCell = (row, column) => {
       verticals[row][column - 1] = true;
     } else if (direction === 'right') {
       verticals[row][column] = true;
+    } else if (direction === 'up') {
+      horizontals[row - 1][column] = true;
+    } else if (direction === 'down') {
+      horizontals[row][column] = true;
     }
   }
 
   // Visit that next cell (recursively)
 };
 
-moveThroughCell(startRow, startColumn);
+// moveThroughCell(startRow, startColumn);
+moveThroughCell(1, 1);
