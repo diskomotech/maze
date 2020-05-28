@@ -118,6 +118,7 @@ horizontals.forEach((row, rowIndex) => {
       unitLength,
       1,
       {
+        label: 'wall',
         isStatic: true
       }
     );
@@ -136,6 +137,7 @@ verticals.forEach ((row, rowIndex) => {
       1,
       unitLength,
       {
+        label: 'wall',
         isStatic: true
       }
     );
@@ -189,9 +191,18 @@ Events.on(engine, 'collisionStart', event => {
   event.pairs.forEach((collision) => {
     const labels = ['ball', 'goal'];
 
-    if (labels.includes(collision.bodyA.label) && 
-        labels.includes(collision.bodyB.label)) {
-          console.log('user won!');
+    if (
+      labels.includes(collision.bodyA.label) && 
+      labels.includes(collision.bodyB.label)
+      ) {
+      // Reapply gravity effect following win
+      world.gravity.y = 1;
+      // Collapse the maze walls
+      world.bodies.forEach(body => {
+        if (body.label === 'wall') {
+          Body.setStatic(body, false);
+        }
+      });
     }
   })
 });
