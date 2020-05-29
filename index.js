@@ -1,7 +1,7 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = 16;
-const cellsVertical = 12;
+const cellsHorizontal = 6;
+const cellsVertical = 2;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -24,6 +24,7 @@ Render.run(render);
 Runner.run(Runner.create(), engine);
 
 // Walls
+
 const walls = [
   Bodies.rectangle(width / 2, 0, width, 2, { isStatic: true}),
   Bodies.rectangle(width / 2, height, width, 2, { isStatic: true }),
@@ -32,9 +33,10 @@ const walls = [
 ];
 World.add(world, walls);
 
-// Maze generation
+// MAZE GENERATION
 
 //Function to shuffle list of grid cell neighbours
+
 const shuffle = (arr) => {
   let counter = arr.length;
 
@@ -60,15 +62,18 @@ const startRow = Math.floor(Math.random() * cellsVertical);
 const startColumn = Math.floor(Math.random() * cellsHorizontal);
 
 const moveThroughCell = (row, column) => {
+
   // If I have visited the cell at [row, column] then return
   if (grid[row][column] === true) {
     return;
   }
 
   // Mark this cell as being visited
+
   grid[row][column] = true;
 
   // Assemble randomly-ordered list of neighbours
+
   const neighbours = shuffle([
     [row - 1, column, 'up'],
     [row, column + 1, 'right'],
@@ -77,20 +82,24 @@ const moveThroughCell = (row, column) => {
   ]);
 
   // For each neighbour...
+
   for (let neighbour of neighbours) {
     const [nextRow, nextColumn, direction] = neighbour;
 
     // See if neighbour is out of bounds
+
     if (nextRow < 0 || nextRow >= cellsVertical || nextColumn < 0 || nextColumn >= cellsHorizontal) {
       continue;
     }
 
     // If we have visited that neighbour then continue to next neighbour
+
     if (grid[nextRow][nextColumn] === true) {
       continue;
     }
 
     // Remove a wall from either horizontals or verticals array
+
     if (direction === 'left') {
       verticals[row][column - 1] = true;
     } else if (direction === 'right') {
@@ -154,6 +163,7 @@ verticals.forEach ((row, rowIndex) => {
 });
 
 // Goal
+
 const goal = Bodies.rectangle(
   width - unitLengthX / 2,
   height - unitLengthY / 2,
@@ -170,6 +180,7 @@ const goal = Bodies.rectangle(
 World.add(world, goal);
 
 // Ball
+
 const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
 const ball = Bodies.circle(
   unitLengthX / 2,
@@ -210,6 +221,7 @@ Events.on(engine, 'collisionStart', event => {
       labels.includes(collision.bodyA.label) && 
       labels.includes(collision.bodyB.label)
       ) {
+        document.querySelector('.winner').classList.remove('hidden');
       // Reapply gravity effect following win
       world.gravity.y = 1;
       // Collapse the maze walls
